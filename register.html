@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+    <h1>用户注册</h1>
+    <form action="register" method="post" id="registrationForm">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="hidden" name="action" value="register"> <!-- 隐藏字段用于标识注册请求 -->
+        <input type="submit" value="注册">
+    </form>
+
+    <script>
+        document.querySelector('#registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 阻止默认表单提交行为
+
+            // 收集用户名和密码
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // 构建请求体数据
+            var requestData = {
+                username: username,
+                password: password
+            };
+
+            // 发送 POST 请求到服务器
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 处理服务器响应，可能是注册成功后的跳转或其他操作
+                if (data.success) {
+                    // 注册成功，跳转到注册成功页面
+                    window.location.href = '/success.html';
+                } else {
+                    // 处理注册失败情况，可以显示错误消息
+                    alert('注册失败：' + data.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

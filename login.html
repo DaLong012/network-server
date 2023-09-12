@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+    <h1>用户登录</h1>
+    <form id="loginForm">
+        <label for="login_username">用户名:</label>
+        <input type="text" id="login_username" name="login_username" required><br><br>
+        <label for="login_password">密码:</label>
+        <input type="password" id="login_password" name="login_password" required><br><br>
+        <input type="submit" value="登录">
+    </form>
+
+    <script>
+        document.querySelector('#loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 阻止默认表单提交行为
+
+            // 收集用户名和密码
+            var username = document.getElementById('login_username').value;
+            var password = document.getElementById('login_password').value;
+
+            // 构建请求体数据
+            var requestData = {
+                username: username,
+                password: password
+            };
+
+            // 发送 POST 请求到服务器
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 处理服务器响应，可能是登录成功后的跳转或其他操作
+                if (data.success) {
+                    // 登录成功，跳转到登录成功页面
+                    window.location.href = '/success1.html';
+                } else {
+                    // 处理登录失败情况，可以显示错误消息
+                    alert('登录失败：' + data.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
