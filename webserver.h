@@ -8,6 +8,7 @@
 #include <sys/epoll.h>
 #include"threadpool.h"
 #include"http.h"
+#include"logger.h"
 
 #define PORT 9999 //端口宏定义
 
@@ -19,6 +20,7 @@ public:
     void server();//服务器具体运行
     void dealread(int fd);//监听到读事件的处理方式
     void dealwrite(int fd);//监听到写事件的处理方式
+    void Log();//打开日志系统
 };
 
 

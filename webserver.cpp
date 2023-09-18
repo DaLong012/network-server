@@ -62,3 +62,8 @@ void webserver::dealwrite(int fd)
 {
 
 }
+void webserver::Log()
+{
+    logger::GetInstance()->open("./test.log");
+    logger::GetInstance()->setmax(1024);
+}
